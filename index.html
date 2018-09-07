@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Markdown ToC Generator</title>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #3b3b3b;
+            color: white;
+        }
+        a, a:hover, a:active, a:visited {
+            color: #8cd4a8;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            grid-template-rows: 50px 50px auto 10px;
+            grid-gap: 10px;
+            padding: 10px;
+            width: calc(100vw - 3 * 10px);
+            height: calc(100vh - 2 * 10px);
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font-size: 22px;
+        }
+        .area {
+            resize: none;
+            background-color: #5b5b5b;
+            color: #c8c8c8;
+            border: 1px solid #4e4e4e;
+            padding: 10px;
+            font-size: 10px;
+            font-family: monospace;
+        }
+        #title {
+            grid-column: 1 / 3;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 32px;
+        }
+        #input-header {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+        }
+        #output-header {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+        }
+        #input-area {
+            grid-column: 1 / 2;
+            grid-row: 3 / 4;
+        }
+        #output-area {
+            grid-column: 2 / 3;
+            grid-row: 3 / 4;
+        }
+        .footer {
+            grid-column: 1 / 3;
+            grid-row: 4 / 5;
+            font-size: 12px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="title">Online Markdown Table of Contents Generator</div>
+    <div id="input-header" class="header">Paste your Markdown text here</div>
+    <div id="output-header" class="header">Output</div>
+    <textarea name="input-area" class="area" id="input-area">
+# Foo
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+## Bar
+
+Nulla facilisi. Proin venenatis urna at justo tempus, laoreet rutrum nisi efficitur.
+
+Etiam iaculis lobortis nibh, et accumsan diam imperdiet vitae.
+
+## Foobar
+
+Fusce at mollis justo. Suspendisse eleifend neque diam, et ullamcorper urna gravida vitae.
+
+# Barfoo
+
+Donec ultricies egestas augue non dignissim.
+
+## Barbar
+
+Praesent fringilla pulvinar pellentesque. Ut elementum ultrices tortor, ut hendrerit diam tempor vitae.
+</textarea>
+    <textarea name="output-area" class="area" id="output-area" readonly></textarea>
+    <div class="footer"><a href="//luciopaiva.com" target="_blank">Lucio Paiva</a> 2018</div>
+</div>
+
+<script src="index.js"></script>
+<script>new MarkdownToc();</script>
+
+</body>
+</html>
