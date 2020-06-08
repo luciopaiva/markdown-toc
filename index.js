@@ -50,6 +50,33 @@ class MarkdownToc {
             let level = NaN;
             let title = null;
 
+            // Check for:
+            // 1. ATX-style headers: ## My Header
+            //
+            // 2. Setext-style headers:
+            //     a) Level 1 header: My Header
+            //                        =========
+            //
+            //     b) Level 2 header: My Header
+            //                        ---------
+            //
+            //    Edge cases that do not count as headers:
+            //     i) Horizontal rule ("Underline" preceded by empty line):
+            //
+            //           Some paragraph 1
+            //           <empty line>
+            //           -----
+            //           Some paragraph 2
+            //
+            //     ii) Two or more horizontal rules:
+            //
+            //           Some paragraph 1
+            //
+            //           -----
+            //           -----
+            //           -----
+            //           Some paragraph 2
+
             if (trimmed.startsWith("#")) {
                 const match = trimmed.match(/(#+)\s*(.*?)#*\s*$/);
                 level = match[1].length;
