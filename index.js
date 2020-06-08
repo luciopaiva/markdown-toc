@@ -33,10 +33,13 @@ class MarkdownToc {
         const menus = ["# Table of contents", ""];
         let isCodeBlock = false;
         let topLevel = NaN;
+        let previous = null;
 
         for (let line of input.split("\n")) {
 
-            if (line.startsWith("```")) {
+            const trimmed = line.trim();
+    
+            if (trimmed.startsWith("```")) {
                 isCodeBlock = !isCodeBlock;
             }
 
@@ -44,9 +47,24 @@ class MarkdownToc {
                 continue;
             }
 
-            if (line.startsWith("#")) {
-                const match = line.match(/(#+)\s*(.*?)#*\s*$/);
-                const level = match[1].length;
+            let level = NaN;
+            let title = null;
+
+            if (trimmed.startsWith("#")) {
+                const match = trimmed.match(/(#+)\s*(.*?)#*\s*$/);
+                level = match[1].length;
+                title = match[2].trim();
+            } else if (previous != null && previous.length > 0 && trimmed.length > 0) {
+                if (trimmed.match(/[^=]/g) == null) {
+                    level = 1;
+                    title = previous;
+                } else if (trimmed.match(/[^-]/g) == null && previous.match(/[^-]/g) != null) {
+                    level = 2;
+                    title = previous;
+                }
+            }
+
+            if (level != NaN && title != null) {
                 if (isNaN(topLevel)) {
                     topLevel = level;
                 }
@@ -55,12 +73,15 @@ class MarkdownToc {
                     continue;
                 }
 
-                const title = match[2].trim();
                 const link = title.toLocaleLowerCase()
                     .replace(/\s/g, "-")
                     .replace(/[^A-Za-z0-9-]/g, "");
                 const menu = `${"  ".repeat(level - topLevel)}- [${title}](#${link})`;
                 menus.push(menu);
+
+                previous = null;
+            } else {
+                previous = trimmed;
             }
         }
 
