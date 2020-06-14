@@ -91,7 +91,7 @@ class MarkdownToc {
                 }
             }
 
-            if (level != NaN && title != null) {
+            if (!isNaN(level) && title != null) {
                 if (isNaN(topLevel)) {
                     topLevel = level;
                 }
