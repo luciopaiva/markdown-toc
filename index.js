@@ -102,7 +102,7 @@ class MarkdownToc {
 
                 const link = title.toLocaleLowerCase()
                     .replace(/\s/g, "-")
-                    .replace(/[^A-Za-z0-9-_]/g, "");
+                    .replace(XRegExp('^\\p{L}*$/g'), "");
                 const menu = `${"  ".repeat(level - topLevel)}- [${title}](#${link})`;
                 menus.push(menu);
 
